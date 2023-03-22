@@ -44,7 +44,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+extern volatile bool button_pressed=false;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
