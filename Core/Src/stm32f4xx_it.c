@@ -181,11 +181,10 @@ void EXTI15_10_IRQHandler(void)
   /* USER CODE BEGIN EXTI15_10_IRQn 0 */
 
   /* USER CODE END EXTI15_10_IRQn 0 */
-
+  HAL_GPIO_EXTI_IRQHandler(increase_LD2_toggle_freq__Pin);
   /* USER CODE BEGIN EXTI15_10_IRQn 1 */
 	HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_13);
 	button_pressed=true;
-  //count+=10;
 
   /* USER CODE END EXTI15_10_IRQn 1 */
 }

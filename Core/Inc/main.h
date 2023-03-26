@@ -43,6 +43,7 @@ extern "C" {
 /* USER CODE BEGIN EC */
 
 extern volatile bool button_pressed;
+extern volatile bool pin_shortcutted;
 /* USER CODE END EC */
 
 /* Exported macro ------------------------------------------------------------*/
@@ -58,6 +59,11 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define increase_LD2_toggle_freq__Pin GPIO_PIN_13
+#define increase_LD2_toggle_freq__GPIO_Port GPIOC
+#define increase_LD2_toggle_freq__EXTI_IRQn EXTI15_10_IRQn
+#define reset_LD2_toggle_freq__Pin GPIO_PIN_0
+#define reset_LD2_toggle_freq__GPIO_Port GPIOC
 #define USART_TX_Pin GPIO_PIN_2
 #define USART_TX_GPIO_Port GPIOA
 #define USART_RX_Pin GPIO_PIN_3

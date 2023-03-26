@@ -50,6 +50,7 @@ osThreadId defaultTaskHandle;
 osThreadId led_blink_varHandle;
 osThreadId led_blink_equalHandle;
 osThreadId button_pressedHandle;
+osThreadId pin_shortcuttedHandle;
 
 int frequency=1;	//Hz
 /* USER CODE END Variables */
@@ -61,6 +62,7 @@ void StartDefaultTask(void const * argument);
 void StartTask0(void const * argument);
 void StartTask1(void const * argument);
 void StartTask2(void const * argument);
+void StartTask3(void const * argument);
 
 /* USER CODE END FunctionPrototypes */
 
@@ -128,7 +130,9 @@ void MX_FREERTOS_Init(void) {
   //task2
   osThreadDef(button_pressed, StartTask2, osPriorityIdle, 0, 128);
   button_pressedHandle = osThreadCreate(osThread(button_pressed), NULL);
-
+  //task3
+  osThreadDef(pin_shortcutted, StartTask3, osPriorityIdle, 0, 128);
+  pin_shortcutted = osThreadCreate(osThread(pin_shortcutted), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -199,45 +203,23 @@ void StartTask2(void const * argument)
   /* USER CODE END StartTask22 */
 }
 
+void StartTask3(void const * argument)
+{
+  /* USER CODE BEGIN StartTask02 */
+  /* Infinite loop */
+	//pin_shortcutted=false;
+  for(;;)
+  {
+	  if(pin_shortcutted==true)
+	  {
+		  frequency=1;
+	  }
+	  osDelay(100);
+  }
+  /* USER CODE END StartTask02 */
+}
 
-/* USER CODE BEGIN Header_StartTask02 */
-/**
-* @brief Function implementing the led_blink thread.
-* @param argument: Not used
-* @retval None
-*/
-/* USER CODE END Header_StartTask02 */
 
-//void StartTask02(void const * argument)
-//{
-//  /* USER CODE BEGIN StartTask02 */
-//  /* Infinite loop */
-//  for(;;)
-//  {
-//		HAL_GPIO_TogglePin(GPIOA,LD2_Pin);
-//	    osDelay(100+count);
-//  }
-//  /* USER CODE END StartTask02 */
-//}
-
-/* USER CODE BEGIN Header_StartTask03 */
-/**
-* @brief Function implementing the button_press thread.
-* @param argument: Not used
-* @retval None
-*/
-/* USER CODE END Header_StartTask03 */
-//void StartTask03(void const * argument)
-//{
-//  /* USER CODE BEGIN StartTask03 */
-//  /* Infinite loop */
-//  for(;;)
-//  {
-//
-//    osDelay(1);
-//  }
-//  /* USER CODE END StartTask03 */
-//}
 
 /* Private application code --------------------------------------------------*/
 /* USER CODE BEGIN Application */
