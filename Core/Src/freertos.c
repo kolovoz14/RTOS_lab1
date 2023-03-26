@@ -58,9 +58,9 @@ int frequency=1;	//Hz
 /* USER CODE BEGIN FunctionPrototypes */
 
 void StartDefaultTask(void const * argument);
-void StartTask11(void const * argument);
-void StartTask21(void const * argument);
-void StartTask22(void const * argument);
+void StartTask0(void const * argument);
+void StartTask1(void const * argument);
+void StartTask2(void const * argument);
 
 /* USER CODE END FunctionPrototypes */
 
@@ -117,16 +117,16 @@ void MX_FREERTOS_Init(void) {
 
 	//app 1-Prepare a simple FreeRTOS application, capable of blinking led light with a frequency equal to 10Hz
 
-  //osThreadDef(led_blink_equal, StartTask11, osPriorityIdle, 0, 128);
+  //osThreadDef(led_blink_equal, StartTask0, osPriorityIdle, 0, 128);
   //led_blink_equalHandle = osThreadCreate(osThread(led_blink_equal), NULL);
 
   //app 2-Prepare an application that has 2 tasks running in parallel
 
   //task1
-  osThreadDef(led_blink_var, StartTask21, osPriorityIdle, 0, 128);
+  osThreadDef(led_blink_var, StartTask1, osPriorityIdle, 0, 128);
   led_blink_varHandle = osThreadCreate(osThread(led_blink_var), NULL);
   //task2
-  osThreadDef(button_pressed, StartTask22, osPriorityIdle, 0, 128);
+  osThreadDef(button_pressed, StartTask2, osPriorityIdle, 0, 128);
   button_pressedHandle = osThreadCreate(osThread(button_pressed), NULL);
 
 
@@ -153,7 +153,7 @@ void StartDefaultTask(void const * argument)
   }
   /* USER CODE END StartDefaultTask */
 }
-void StartTask11(void const * argument)
+void StartTask0(void const * argument)
 {
   /* USER CODE BEGIN StartDefaultTask */
 	//Prepare a simple FreeRTOS application, capable of blinking led light with a frequency equal to 10Hz
@@ -166,7 +166,7 @@ void StartTask11(void const * argument)
   /* USER CODE END StartDefaultTask */
 }
 
-void StartTask21(void const * argument)
+void StartTask1(void const * argument)
 {
   /* USER CODE BEGIN StartTask02 */
 	//blinks a LED with the frequency defined as a modifiable parameter with some initial value e.g. 10,
@@ -179,14 +179,13 @@ void StartTask21(void const * argument)
   }
   /* USER CODE END StartTask22 */
 }
-void StartTask22(void const * argument)
+void StartTask2(void const * argument)
 {
   /* USER CODE BEGIN StartTask02 */
 	//runs periodically every 1s for checking whether the button has ever been pressed (no matter what amount of times).
 	//When the press was detected, the modifiable parameter shall be increased with an additional chosen value
   /* Infinite loop */
 	const int inc_value=1; // Hz
-	//int freq=3;
   for(;;)
   {
 	  if(button_pressed==true)
@@ -196,10 +195,9 @@ void StartTask22(void const * argument)
 	  }
 	  osDelay(1000);
   }
+
   /* USER CODE END StartTask22 */
 }
-
-
 
 
 /* USER CODE BEGIN Header_StartTask02 */
