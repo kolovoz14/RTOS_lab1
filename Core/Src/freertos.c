@@ -54,6 +54,7 @@ osThreadId pin_shortcuttedHandle;
 
 int frequency=1;	//Hz
 /* USER CODE END Variables */
+osThreadId defaultTaskHandle;
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -65,6 +66,8 @@ void StartTask2(void const * argument);
 void StartTask3(void const * argument);
 
 /* USER CODE END FunctionPrototypes */
+
+void StartDefaultTask(void const * argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -112,30 +115,28 @@ void MX_FREERTOS_Init(void) {
 
   /* Create the thread(s) */
   /* definition and creation of defaultTask */
-  //osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 128);
-  //defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
+  osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 128);
+  defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
 
+  /* USER CODE BEGIN RTOS_THREADS */
 	// uncoment tasks for right application
 
 	//app 1-Prepare a simple FreeRTOS application, capable of blinking led light with a frequency equal to 10Hz
 
-  //osThreadDef(led_blink_equal, StartTask0, osPriorityIdle, 0, 128);
-  //led_blink_equalHandle = osThreadCreate(osThread(led_blink_equal), NULL);
+	//osThreadDef(led_blink_equal, StartTask0, osPriorityIdle, 0, 128);
+	//led_blink_equalHandle = osThreadCreate(osThread(led_blink_equal), NULL);
 
-  //app 2-Prepare an application that has 2 tasks running in parallel
+	//app 2-Prepare an application that has 2 tasks running in parallel
 
-  //task1
-  osThreadDef(led_blink_var, StartTask1, osPriorityIdle, 0, 128);
-  led_blink_varHandle = osThreadCreate(osThread(led_blink_var), NULL);
-  //task2
-  osThreadDef(button_pressed, StartTask2, osPriorityIdle, 0, 128);
-  button_pressedHandle = osThreadCreate(osThread(button_pressed), NULL);
-  //task3
-  osThreadDef(pin_shortcutted, StartTask3, osPriorityIdle, 0, 128);
-  pin_shortcutted = osThreadCreate(osThread(pin_shortcutted), NULL);
-
-  /* USER CODE BEGIN RTOS_THREADS */
-  /* add threads, ... */
+	//task1
+	osThreadDef(led_blink_var, StartTask1, osPriorityIdle, 0, 128);
+	led_blink_varHandle = osThreadCreate(osThread(led_blink_var), NULL);
+	//task2
+	osThreadDef(button_pressed, StartTask2, osPriorityIdle, 0, 128);
+	button_pressedHandle = osThreadCreate(osThread(button_pressed), NULL);
+	//task3
+	osThreadDef(pin_shortcutted, StartTask3, osPriorityIdle, 0, 128);
+	pin_shortcutted = osThreadCreate(osThread(pin_shortcutted), NULL);
   /* USER CODE END RTOS_THREADS */
 
 }
@@ -157,9 +158,12 @@ void StartDefaultTask(void const * argument)
   }
   /* USER CODE END StartDefaultTask */
 }
+
+/* Private application code --------------------------------------------------*/
+/* USER CODE BEGIN Application */
 void StartTask0(void const * argument)
 {
-  /* USER CODE BEGIN StartDefaultTask */
+  /* USER CODE BEGIN StartTask0 */
 	//Prepare a simple FreeRTOS application, capable of blinking led light with a frequency equal to 10Hz
   /* Infinite loop */
   for(;;)
@@ -167,12 +171,12 @@ void StartTask0(void const * argument)
 	  HAL_GPIO_TogglePin(GPIOA,LD2_Pin);
 	  osDelay(100);	//100ms-> 0.1 s -> 10Hz
   }
-  /* USER CODE END StartDefaultTask */
+  /* USER CODE END StartTask0 */
 }
 
 void StartTask1(void const * argument)
 {
-  /* USER CODE BEGIN StartTask02 */
+  /* USER CODE BEGIN StartTask1 */
 	//blinks a LED with the frequency defined as a modifiable parameter with some initial value e.g. 10,
 	// frequency in HZ
   /* Infinite loop */
@@ -181,11 +185,11 @@ void StartTask1(void const * argument)
 		HAL_GPIO_TogglePin(GPIOA,LD2_Pin);
 	    osDelay(1000/frequency);	//100ms-> 0.1 s -> 10Hz
   }
-  /* USER CODE END StartTask22 */
+  /* USER CODE END StartTask1 */
 }
 void StartTask2(void const * argument)
 {
-  /* USER CODE BEGIN StartTask02 */
+  /* USER CODE BEGIN StartTask2 */
 	//runs periodically every 1s for checking whether the button has ever been pressed (no matter what amount of times).
 	//When the press was detected, the modifiable parameter shall be increased with an additional chosen value
   /* Infinite loop */
@@ -200,12 +204,12 @@ void StartTask2(void const * argument)
 	  osDelay(1000);
   }
 
-  /* USER CODE END StartTask22 */
+  /* USER CODE END StartTask2 */
 }
 
 void StartTask3(void const * argument)
 {
-  /* USER CODE BEGIN StartTask02 */
+  /* USER CODE BEGIN StartTask3 */
   /* Infinite loop */
 	//pin_shortcutted=false;
   for(;;)
@@ -216,12 +220,8 @@ void StartTask3(void const * argument)
 	  }
 	  osDelay(100);
   }
-  /* USER CODE END StartTask02 */
+  /* USER CODE END StartTask3 */
 }
 
-
-
-/* Private application code --------------------------------------------------*/
-/* USER CODE BEGIN Application */
 
 /* USER CODE END Application */

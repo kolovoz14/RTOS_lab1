@@ -64,6 +64,7 @@ void Error_Handler(void);
 #define increase_LD2_toggle_freq__EXTI_IRQn EXTI15_10_IRQn
 #define reset_LD2_toggle_freq__Pin GPIO_PIN_0
 #define reset_LD2_toggle_freq__GPIO_Port GPIOC
+#define reset_LD2_toggle_freq__EXTI_IRQn EXTI0_IRQn
 #define USART_TX_Pin GPIO_PIN_2
 #define USART_TX_GPIO_Port GPIOA
 #define USART_RX_Pin GPIO_PIN_3
