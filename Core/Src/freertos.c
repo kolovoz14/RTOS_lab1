@@ -136,7 +136,7 @@ void MX_FREERTOS_Init(void) {
 	button_pressedHandle = osThreadCreate(osThread(button_pressed), NULL);
 	//task3
 	osThreadDef(pin_shortcutted, StartTask3, osPriorityIdle, 0, 128);
-	pin_shortcutted = osThreadCreate(osThread(pin_shortcutted), NULL);
+	pin_shortcuttedHandle = osThreadCreate(osThread(pin_shortcutted), NULL);
   /* USER CODE END RTOS_THREADS */
 
 }
@@ -217,6 +217,7 @@ void StartTask3(void const * argument)
 	  if(pin_shortcutted==true)
 	  {
 		  frequency=1;
+		  pin_shortcutted=false;
 	  }
 	  osDelay(100);
   }
